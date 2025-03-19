@@ -43,7 +43,7 @@ void imprimir_vehiculo(struct vehiculo *vehiculo)
     printf("  + Vehículo ID: %d\n", vehiculo->id_vehiculo);
     printf("    - Capacidad máxima: %.2f\n", vehiculo->capacidad_maxima);
     printf("    - Capacidad restante: %.2f\n", vehiculo->capacidad_acumulada);
-    printf("    - Tiempo consumido: %.2f\n", vehiculo->vt_actual);
+    printf("    - Tiempo consumido: %.2f\n", floor(vehiculo->vt_actual));
     printf("    - Tiempo máximo: %.2f\n", vehiculo->vt_final);
     printf("    - Número de clientes: %d\n", vehiculo->clientes_contados);
     printf("    - Fitness del vehículo: %.2f\n", vehiculo->fitness_vehiculo);
@@ -315,32 +315,58 @@ void aco(struct vrp_configuracion *vrp, struct individuo *ind, struct hormiga *h
         else
         {
             int proximo_cliente = -1; // Definimos proximo cliente y le asiganmos -1 asegunaod que no hay cliente aun asiganad
-
-            for (int i = 0; i < vrp->num_clientes; i++) // Reseteamos las probabilidades en 0.0 cada posicion de arreglo
-                hormiga->probabilidades[i] = 0.0;
-
-            for (int i = 0; i < vrp->num_clientes; i++) // Recorremos los posibles clientes
-                if (hormiga->posibles_clientes[i] == 1) // Si encontramos un posible cliente lo mandamos a calculara la probabilidad de ser elegido
-                    hormiga->probabilidades[i] = calcular_probabilidad(origen, i, ind, vrp, hormiga, instancia_feromona, instancia_visiblidad, instancia_ventanas_tiempo);
-
-            double aleatorio_seleccion = ((double)rand() / RAND_MAX); // Número aleatorio entre 0 y 1
-            double acumulador = 0.0;                                  // Acumulador para las probabilidades
-
-            for (int i = 0; i < vrp->num_clientes; i++) // Recorremos todos los clientes
+            if ((double)rand() / RAND_MAX < hormiga->umbral)
             {
-                if (hormiga->posibles_clientes[i] == 1) // Verificamos si el cliente está disponible
-                {
-                    // Acumulamos la probabilidad para el cliente actual
-                    double probabilidad_acumulada = acumulador + hormiga->probabilidades[i];
+                int num_posibles = 0;
+                int posibles_indices[vrp->num_clientes];
 
-                    // Verificamos si el número aleatorio cae dentro de las probabilidades acumuladas
-                    if (aleatorio_seleccion <= probabilidad_acumulada)
+                // Crear una lista de los índices de clientes posibles
+                for (int i = 0; i < vrp->num_clientes; i++)
+                {
+                    if (hormiga->posibles_clientes[i] == 1)
                     {
-                        proximo_cliente = i; // Seleccionamos este cliente
-                        break;               // Terminamos el ciclo, ya que hemos seleccionado al cliente
+                        posibles_indices[num_posibles] = i;
+                        num_posibles++;
+                    }
+                }
+
+                // Seleccionar un cliente aleatorio de la lista
+                if (num_posibles > 0)
+                {
+                    int indice_aleatorio = rand() % num_posibles;
+                    proximo_cliente = posibles_indices[indice_aleatorio];
+                }
+            }
+            else
+            {
+
+                for (int i = 0; i < vrp->num_clientes; i++) // Reseteamos las probabilidades en 0.0 cada posicion de arreglo
+                    hormiga->probabilidades[i] = 0.0;
+
+                for (int i = 0; i < vrp->num_clientes; i++) // Recorremos los posibles clientes
+                    if (hormiga->posibles_clientes[i] == 1) // Si encontramos un posible cliente lo mandamos a calculara la probabilidad de ser elegido
+                        hormiga->probabilidades[i] = calcular_probabilidad(origen, i, ind, vrp, hormiga, instancia_feromona, instancia_visiblidad, instancia_ventanas_tiempo);
+
+                double aleatorio_seleccion = ((double)rand() / RAND_MAX); // Número aleatorio entre 0 y 1
+                double acumulador = 0.0;                                  // Acumulador para las probabilidades
+
+                for (int i = 0; i < vrp->num_clientes; i++) // Recorremos todos los clientes
+                {
+                    if (hormiga->posibles_clientes[i] == 1) // Verificamos si el cliente está disponible
+                    {
+                        // Acumulamos la probabilidad para el cliente actual
+                        double probabilidad_acumulada = acumulador + hormiga->probabilidades[i];
+
+                        // Verificamos si el número aleatorio cae dentro de las probabilidades acumuladas
+                        if (aleatorio_seleccion <= probabilidad_acumulada)
+                        {
+                            proximo_cliente = i; // Seleccionamos este cliente
+                            break;               // Terminamos el ciclo, ya que hemos seleccionado al cliente
+                        }
                     }
                 }
             }
+
             if (proximo_cliente != -1)
             {
                 insertar_cliente_ruta(hormiga, vehiculo, &(vrp->clientes[proximo_cliente]));                                                                   // Insertamos el cliente en la ruta del vehiculo
@@ -352,57 +378,138 @@ void aco(struct vrp_configuracion *vrp, struct individuo *ind, struct hormiga *h
     if (ruta->cola->cliente != 0)
         insertar_cliente_ruta(hormiga, vehiculo, &(vrp->clientes[0]));
 }
-/*void liberar_memoria_hormiga(struct hormiga * hormiga, struct individuo * ind)
+void liberar_memoria_hormiga(struct hormiga *hormiga, struct individuo *ind)
 {
     // Liberar las estructuras dinámicas dentro de cada hormiga
     for (int i = 0; i < ind->numHormigas; i++)
     {
         // Liberar la memoria de la tabla tabu
         free(hormiga[i].tabu);
+
         // Liberar las probabilidades si están asignadas dinámicamente
         free(hormiga[i].probabilidades);
 
+        // Liberar el arreglo de posibles clientes
+        free(hormiga[i].posibles_clientes); // Corregido: usar hormiga[i] en lugar de hormiga->
+
         // Liberar la flota (si está asignada dinámicamente)
-        struct nodo_vehiculo *vehiculo_actual = hormiga[i].flota->cabeza;
-        while (vehiculo_actual != NULL)
+        if (hormiga[i].flota)
         {
-            // Liberar las rutas de cada vehículo
-            struct nodo_ruta *nodo_actual = vehiculo_actual->vehiculo->ruta->cabeza;
-            while (nodo_actual != NULL)
+            struct nodo_vehiculo *vehiculo_actual = hormiga[i].flota->cabeza;
+            while (vehiculo_actual != NULL)
             {
-                struct nodo_ruta *temp = nodo_actual;
-                nodo_actual = nodo_actual->siguiente;
-                free(temp);
+                struct nodo_vehiculo *temp_vehiculo = vehiculo_actual;
+                vehiculo_actual = vehiculo_actual->siguiente;
+
+                // Liberar las rutas de cada vehículo
+                if (temp_vehiculo->vehiculo && temp_vehiculo->vehiculo->ruta)
+                {
+                    struct nodo_ruta *nodo_actual = temp_vehiculo->vehiculo->ruta->cabeza;
+                    while (nodo_actual != NULL)
+                    {
+                        struct nodo_ruta *temp = nodo_actual;
+                        nodo_actual = nodo_actual->siguiente;
+                        free(temp);
+                    }
+                    free(temp_vehiculo->vehiculo->ruta);
+                }
+
+                // Liberar el vehículo
+                free(temp_vehiculo->vehiculo);
+
+                // Liberar el nodo del vehículo
+                free(temp_vehiculo);
             }
-            free(vehiculo_actual->vehiculo->ruta);
-            vehiculo_actual = vehiculo_actual->siguiente;
+            free(hormiga[i].flota);
         }
-        free(hormiga[i].flota);
     }
+
     // Finalmente, liberar la memoria de las hormigas
     free(hormiga);
-}*/
+}
+void reiniciar_hormiga(struct hormiga *hormiga, struct vrp_configuracion *vrp)
+{
+    // Reset ant's data
+    for (int i = 0; i < vrp->num_clientes; i++)
+    {
+        hormiga->tabu[i] = 0;
+        hormiga->posibles_clientes[i] = 0;
+        hormiga->probabilidades[i] = 0.0;
+    }
 
+    hormiga->tabu_contador = 0;
+    hormiga->posibles_clientes_contador = 0;
+    hormiga->suma_probabilidades = 0.0;
+    hormiga->fitness_global = 0.0;
+
+    // Clear the vehicle fleet but preserve the fleet structure itself
+    if (hormiga->flota)
+    {
+        struct nodo_vehiculo *nodo_actual = hormiga->flota->cabeza;
+        while (nodo_actual)
+        {
+            struct nodo_vehiculo *temp = nodo_actual;
+            nodo_actual = nodo_actual->siguiente;
+
+            // Free the vehicle's route
+            if (temp->vehiculo && temp->vehiculo->ruta)
+            {
+                struct nodo_ruta *nodo_ruta = temp->vehiculo->ruta->cabeza;
+                while (nodo_ruta)
+                {
+                    struct nodo_ruta *temp_ruta = nodo_ruta;
+                    nodo_ruta = nodo_ruta->siguiente;
+                    free(temp_ruta);
+                }
+
+                // Reset the route list but keep the structure
+                temp->vehiculo->ruta->cabeza = NULL;
+                temp->vehiculo->ruta->cola = NULL;
+                free(temp->vehiculo->ruta);
+            }
+
+            // Free the vehicle
+            free(temp->vehiculo);
+            free(temp);
+        }
+
+        // Reset the fleet pointers
+        hormiga->flota->cabeza = NULL;
+        hormiga->flota->cola = NULL;
+    }
+
+    // Reset vehicle count
+    hormiga->vehiculos_necesarios = 0;
+
+    // Reinitialize the fleet with a first vehicle
+    inserta_vehiculo_flota(hormiga, vrp, hormiga->vehiculos_necesarios + 1);
+    hormiga->vehiculos_necesarios++;
+}
 void vrp_tw_aco(struct vrp_configuracion *vrp, struct individuo *ind, double **instancia_visiblidad, double **instancia_distancias, double **instancia_feromona, double **instancia_ventanas_tiempo)
 {
     struct hormiga *hormiga = malloc(sizeof(struct hormiga) * ind->numHormigas); // Asiganamos memoria para las hormigas
 
     inicializar_hormiga(vrp, ind, hormiga); // Inicializamos las hormigas con los datos que requiere
 
-    // EL numero de iteracines
     for (int i = 0; i < ind->numIteraciones; i++)
-        //{ // El numero de hormigas
+    {
         for (int j = 0; j < ind->numHormigas; j++)
         {
             aco(vrp, ind, &hormiga[j], instancia_visiblidad, instancia_feromona, instancia_distancias, instancia_ventanas_tiempo);
             calcular_fitness(&hormiga[j], instancia_distancias);
-            // hormiga[j].umbral *= 0.95;
+            hormiga[j].umbral *= 0.95;
         }
 
-    for (int j = 0; j < ind->numHormigas; j++)
-        actualizar_feromona(ind, &hormiga[j], vrp, instancia_feromona);
+        /*for (int j = 0; j < ind->numHormigas; j++)
+            actualizar_feromona(ind, &hormiga[j], vrp, instancia_feromona);*/
+        
+        if (i < ind->numHormigas - 1)
+        {
+            for (int j = 0; j < ind->numHormigas; j++) // Using j as the counter
+                reiniciar_hormiga(&hormiga[j], vrp);   // Also fixed function name
+        }
+    }
 
-    //}
     imprimir_hormigas(hormiga, vrp, ind->numHormigas);
-    //   liberar_memoria_hormiga(hormiga, ind);*/
+    liberar_memoria_hormiga(hormiga, ind);
 }

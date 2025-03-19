@@ -52,5 +52,7 @@ void inicializar_hormiga(struct vrp_configuracion *vrp, struct individuo *ind, s
 void calcular_posibles_clientes(int origen, struct vehiculo *vehiculo, struct vrp_configuracion *vrp, struct hormiga *hormiga, double **instancia_distancias);
 double calcular_probabilidad(int origen, int destino, struct individuo *ind, struct vrp_configuracion *vrp, struct hormiga *hormiga, double **instancia_feromona, double **instancia_visibilidad,double **instancia_ventanas_tiempo);
 void aco(struct vrp_configuracion *vrp, struct individuo *ind, struct hormiga *hormiga, double **instancia_visiblidad, double **instancia_feromona, double **instancia_distancias,double **instancia_ventanas_tiempo);
+void liberar_memoria_hormiga(struct hormiga *hormiga, struct individuo *ind) ;
+void reiniciar_homiga(struct hormiga * hormiga, struct vrp_configuracion *vrp);
 void vrp_tw_aco(struct vrp_configuracion *vrp, struct individuo *ind, double **instancia_visiblidad, double **instancia_distancias, double **instancia_feromona,double **instancia_ventanas_tiempo);
 #endif // VRP_TW_ACO_H
