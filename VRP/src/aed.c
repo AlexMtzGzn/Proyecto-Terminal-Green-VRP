@@ -50,7 +50,7 @@ void inicializar_Distancias(double **instancia_distancias, struct vrp_configurac
    {
       for (int j = i + 1; j < vrp->num_clientes; j++)
       {
-         
+
          if (i != j)
          {
             distancia = calcular_Distancia(vrp, i, j);
@@ -70,13 +70,19 @@ void inicializar_Feromona(struct vrp_configuracion *vrp, double **instancia_fero
    // Recorre todos los clientes en la matriz de feromonas (fila i, columna j)
    for (int i = 0; i < vrp->num_clientes; i++)
    {
-      for (int j = 0; j < vrp->num_clientes; j++)
+      for (int j = i + 1; j < vrp->num_clientes; j++)
       {
          // Si i y j son diferentes (es decir, no es la misma ciudad), se asigna un valor de feromona de 1.0
          if (i != j)
+         {
             instancia_feromona[i][j] = 1.0;
+            instancia_feromona[j][i] = instancia_feromona[i][j]; // Aprovechamos la simetría
+         }
+
          else
+         {
             instancia_feromona[i][j] = 0.0;
+         }
       }
    }
 }
@@ -424,9 +430,9 @@ void aed_vrp(int num_poblacion, int num_generaciones, int tamanio_instancia, cha
    liberar_instancia(instancia_visibilidad, vrp->num_clientes); // Liberemos la memoria de la instancia visibilidad
    liberar_instancia(instancia_distancias, vrp->num_clientes);  // Liberemos la memoria de la instancia distancias
    liberar_rangos(rango);                                       // Liberemos la memoria de los rangos
-   liberar_individuos(objetivo, num_poblacion, true); // Liberemos la memoria del objetivo
-   liberar_individuos(prueba, num_poblacion, true);   // Liberemos la memoria de la prueba
-   liberar_individuos(ruidoso, num_poblacion, false); // Liberemos la memoria del ruidoso
-   liberar_individuos(resultado, 1, true);            // Liberemos los resultado
-   liberar_memoria_vrp_configuracion(vrp);            // Liberemos la memoria del vrp
+   liberar_individuos(objetivo, num_poblacion, true);           // Liberemos la memoria del objetivo
+   liberar_individuos(prueba, num_poblacion, true);             // Liberemos la memoria de la prueba
+   liberar_individuos(ruidoso, num_poblacion, false);           // Liberemos la memoria del ruidoso
+   liberar_individuos(resultado, 1, true);                      // Liberemos los resultado
+   liberar_memoria_vrp_configuracion(vrp);                      // Liberemos la memoria del vrp
 }

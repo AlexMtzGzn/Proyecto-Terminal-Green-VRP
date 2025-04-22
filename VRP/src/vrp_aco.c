@@ -5,6 +5,7 @@
 #include <time.h>
 #include "../include/estructuras.h"
 #include "../include/vrp_aco.h"
+#include "../include/vrp_sa.h"
 #include "../include/lista_flota.h"
 #include "../include/lista_ruta.h"
 #include "../include/control_memoria.h"
@@ -404,6 +405,7 @@ void vrp_aco(struct vrp_configuracion *vrp, struct individuo *ind, double **inst
 
     // Guardamos la mejor hormiga encontrada en la estructura individuo
     recuperamos_mejor_hormiga(ind, &hormiga[indice]);
+    vrp_sa(vrp,ind,instancia_distancias);
 
     // Imprimimos las hormigas
      //imprimir_hormigas(hormiga, vrp, ind);
