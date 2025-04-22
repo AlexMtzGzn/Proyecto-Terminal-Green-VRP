@@ -218,7 +218,7 @@ El algoritmo **DE** se encarga de optimizar automáticamente los parámetros de 
    Ejemplo de visualización:  
    ![Imagen Ruta](Recursos_Readme/Ejemplo_png.png)
 
-5. **GIF simulado**
+5. **GIF simulado** 
 
    - Se crea un **GIF animado** que simula el proceso de construcción de las rutas, mostrando cómo cada vehículo va atendiendo clientes, según el proceso de decisión de la hormiga.
 
