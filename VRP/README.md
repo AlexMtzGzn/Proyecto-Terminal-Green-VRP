@@ -232,12 +232,17 @@ El archivo `JSON` generado tendrá la siguiente estructura:
 ```json
 {
 	"Archivo":	"RC100_(25)",
-	"Tiempo Ejecucion en Minutos":	13,
-	"Alpha":	2.0880958541939481,
-	"Beta":	3.9300366317294708,
-	"Rho":	0.32344335747111741,
-	"Numero Hormigas":	28,
-	"Numero Iteraciones":	107,
+	"Tiempo Ejecucion en Minutos":	2,
+	"Alpha":	1.332143975506604,
+	"Beta":	2.7454391065963728,
+	"Rho":	0.19041168572865974,
+	"Numero Hormigas":	20,
+	"Numero Iteraciones ACO":	148,
+	"Temperatura Inicial: ":	540.64893656906145,
+	"Temperatura Final: ":	0.083569377757874028,
+	"Factor de Enfriamiento: ":	0.9893298309293248,
+	"Factor de Control: ":	0.532362188786437,
+	"Numero Iteraciones SA: ":	50,
 	"Fitness Global":	294.99443951784644,
 	"flota":	[{
 			"Id_vehiculo":	1,
