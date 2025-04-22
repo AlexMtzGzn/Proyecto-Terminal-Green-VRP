@@ -1,4 +1,4 @@
-# 🚚 Resolución del VRP con ACO optimizado por DE
+# 🚚 Resolución del Problema de Ruteo de Vehículos (VRP) mediante ACO-SA y Ajuste Paramétrico usando Evolución Diferencial
 
 Este proyecto implementa una solución híbrida para el Problema de Rutas de Vehículos (VRP), utilizando el algoritmo Ant Colony Optimization (ACO) optimizado automáticamente mediante el Algoritmo Evolutivo Diferencial (DE).
 

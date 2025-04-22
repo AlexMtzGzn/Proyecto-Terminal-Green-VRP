@@ -1,4 +1,4 @@
-# 🚚 Optimización Híbrida para el TSP: ACO con Refinamiento SA y Calibración Automática mediante DE"
+# 🚚 Optimización del Problema del Viajante (TSP) mediante una Metaheurística Híbrida ACO-SA con Calibración de Parámetros por Evolución Diferencial"
 
 Este proyecto implementa una solución híbrida para el Problema del Viajante (TSP), utilizando el algoritmo Ant Colony Optimization (ACO) para generar rutas iniciales, el Recocido Simulado (SA) para refinarlas, y todo el proceso optimizado automáticamente mediante el Algoritmo Evolutivo Diferencial (DE).
 

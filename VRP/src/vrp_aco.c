@@ -118,7 +118,7 @@ void actualizar_feromona(struct individuo *ind, struct hormiga *hormiga, struct 
     }
 }
 
-void calcular_fitness(struct hormiga *hormiga, double **instancia_distancias)
+void evaluaFO_ACO(struct hormiga *hormiga, double **instancia_distancias)
 {
     // Recorremos cada vehículo en la flota de la hormiga
     struct nodo_vehiculo *vehiculo_actual = hormiga->flota->cabeza;
@@ -377,7 +377,7 @@ void vrp_aco(struct vrp_configuracion *vrp, struct individuo *ind, double **inst
             aco(vrp, ind, &hormiga[j], instancia_feromona, instancia_visiblidad);
 
             // Calculamos el fitness de la ruta generada por la hormiga j
-            calcular_fitness(&hormiga[j], instancia_distancias);
+            evaluaFO_ACO(&hormiga[j], instancia_distancias);
         }
 
         // Buscamos la hormiga con el mejor fitness en esta iteración

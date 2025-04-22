@@ -330,3 +330,33 @@ struct nodo_vehiculo *asignar_memoria_nodo_vehiculo()
     }
     return nodo_vehiculo;
 }
+
+struct metal *asignar_memoria_metal()
+{
+    struct metal *metal = (struct metal *)malloc(sizeof(struct metal));
+    if (metal == NULL)
+    {
+        imprimir_mensaje("Error: No se pudo asignar memoria para el metal.");
+        exit(EXIT_FAILURE);
+    }
+    return metal;
+}
+
+/**
+ * Libera la memoria del metal.
+ */
+void liberar_memoria_metal(struct individuo *ind)
+{
+    if (ind->metal)
+    {
+        if (ind->metal->solucion_vecina)
+            liberar_lista_vehiculos(ind->metal->solucion_vecina);
+        if (ind->metal->solucion_inicial)
+            liberar_lista_vehiculos(ind->metal->solucion_inicial);
+        if (ind->metal->mejor_solucion)
+            liberar_lista_vehiculos(ind->metal->mejor_solucion);
+        free(ind->metal);
+    }
+}
+
+

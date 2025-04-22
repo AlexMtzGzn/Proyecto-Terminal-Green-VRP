@@ -130,8 +130,8 @@ void construyeRuidosos(struct individuo *objetivo, struct individuo *ruidoso, st
       ruidoso[i].temperatura_inicial = objetivo[aleatorio1].temperatura_inicial + 0.5 * (objetivo[aleatorio2].temperatura_inicial - objetivo[aleatorio3].temperatura_inicial);
       ruidoso[i].temperatura_final = objetivo[aleatorio1].temperatura_final + 0.5 * (objetivo[aleatorio2].temperatura_final - objetivo[aleatorio3].temperatura_final);
       ruidoso[i].factor_enfriamiento = objetivo[aleatorio1].factor_enfriamiento + 0.5 * (objetivo[aleatorio2].factor_enfriamiento - objetivo[aleatorio3].factor_enfriamiento);
+      ruidoso[i].factor_control = objetivo[aleatorio1].factor_control + 0.5 * (objetivo[aleatorio2].factor_control - objetivo[aleatorio3].factor_control);
       ruidoso[i].numIteracionesSA = objetivo[aleatorio1].numIteracionesSA + (int)(0.5 * (objetivo[aleatorio2].numIteracionesSA - objetivo[aleatorio3].numIteracionesSA));
-
       // Limita los valores de los parámetros para asegurarse de que estén dentro de un rango válido
 
       // Limita 'alpha' a estar dentro de los valores mínimos y máximos
@@ -189,6 +189,13 @@ void construyeRuidosos(struct individuo *objetivo, struct individuo *ruidoso, st
 
       if (ruidoso[i].factor_enfriamiento < rango->minFactor_enfriamiento)
          ruidoso[i].factor_enfriamiento = rango->minFactor_enfriamiento;
+
+      // Limita 'factor_control' a estar dentro de los valores mínimos y máximos
+      if (ruidoso[i].factor_control > rango->maxFactor_control)
+         ruidoso[i].factor_control = rango->maxFactor_control;
+
+      if (ruidoso[i].factor_control < rango->minFactor_control)
+         ruidoso[i].factor_control = rango->minFactor_control;
 
       // Limita 'numIteracionesSA' a estar dentro de los valores mínimos y máximos
       if (ruidoso[i].numIteracionesSA > rango->maxIteracionesSA)
@@ -253,6 +260,8 @@ void inicializaPoblacion(struct individuo *objetivo, struct vrp_configuracion *v
          rango->minTemperatura_final = 0.01;
          rango->maxFactor_enfriamiento = 0.98;
          rango->minFactor_enfriamiento = 0.95;
+         rango->maxFactor_control = 0.9;
+         rango->minFactor_control = 0.5;
          rango->maxIteracionesSA = 50;
          rango->minIteracionesSA = 30;
       }
@@ -273,8 +282,10 @@ void inicializaPoblacion(struct individuo *objetivo, struct vrp_configuracion *v
          rango->minTemperatura_inicial = 400.0;
          rango->maxTemperatura_final = 0.1;
          rango->minTemperatura_final = 0.01;
-         rango->maxFactor_enfriamiento = 0.98;
+         rango->maxFactor_enfriamiento = 0.99;
          rango->minFactor_enfriamiento = 0.95;
+         rango->maxFactor_control = 0.9;
+         rango->minFactor_control = 0.5;
          rango->maxIteracionesSA = 80;
          rango->minIteracionesSA = 50;
       }
@@ -290,7 +301,7 @@ void inicializaPoblacion(struct individuo *objetivo, struct vrp_configuracion *v
          rango->minRho = 0.1;
          rango->maxNumHormigas = 100;
          rango->minNumHormigas = 20;
-         rango->maxNumIteracionesACO = 200;
+         rango->maxNumIteracionesACO = 250;
          rango->minNumIteracionesACO = 50;
          rango->maxTemperatura_inicial = 1000.0;
          rango->minTemperatura_inicial = 600.0;
@@ -298,7 +309,9 @@ void inicializaPoblacion(struct individuo *objetivo, struct vrp_configuracion *v
          rango->minTemperatura_final = 0.01;
          rango->maxFactor_enfriamiento = 0.995;
          rango->minFactor_enfriamiento = 0.98;
-         rango->maxIteracionesSA = 100;
+         rango->maxFactor_control = 0.9;
+         rango->minFactor_control = 0.5;
+         rango->maxIteracionesSA = 150;
          rango->minIteracionesSA = 80;
       }
 
@@ -311,6 +324,7 @@ void inicializaPoblacion(struct individuo *objetivo, struct vrp_configuracion *v
       objetivo[i].temperatura_inicial = generaAleatorio(rango->minTemperatura_inicial, rango->maxTemperatura_inicial);
       objetivo[i].temperatura_final = generaAleatorio(rango->minTemperatura_final, rango->maxTemperatura_final);
       objetivo[i].factor_enfriamiento = generaAleatorio(rango->minFactor_enfriamiento, rango->maxFactor_enfriamiento);
+      objetivo[i].factor_control = generaAleatorio(rango->minFactor_control, rango->maxFactor_control);
       objetivo[i].numIteracionesSA = (int)generaAleatorio(rango->minIteracionesSA, rango->maxIteracionesSA);
    }
 }
@@ -358,6 +372,7 @@ void aed_vrp(int num_poblacion, int num_generaciones, int tamanio_instancia, cha
          resultado->temperatura_inicial = objetivo[i].temperatura_inicial; // Copiamos la temperatura inicial del mejor metal
          resultado->temperatura_final = objetivo[i].temperatura_final;     // Copiamos la temperatura final  del mejor metal
          resultado->factor_enfriamiento = objetivo[i].factor_enfriamiento; // Copiamos el factor de enfriamiento del mejor metal
+         resultado->factor_control = objetivo[i].factor_control;           // Copiamos el factor de control del mejor metal
          resultado->numIteracionesSA = objetivo[i].numIteracionesSA;       // Copiamos el numero de iteraciones del mejor metal
          recuperamos_mejor_hormiga(resultado, objetivo[i].hormiga);
       }
@@ -385,6 +400,7 @@ void aed_vrp(int num_poblacion, int num_generaciones, int tamanio_instancia, cha
             resultado->temperatura_inicial = prueba[i].temperatura_inicial; // Copiamos la temperatura inicial del mejor metal
             resultado->temperatura_final = prueba[i].temperatura_final;     // Copiamos la temperatura final  del mejor metal
             resultado->factor_enfriamiento = prueba[i].factor_enfriamiento; // Copiamos el factor de enfriamiento del mejor metal
+            resultado->factor_control = prueba[i].factor_control;           // Copiamos el factor de control del mejor metal
             resultado->numIteracionesSA = prueba[i].numIteracionesSA;       // Copiamos el numero de iteraciones del mejor metal
 
             recuperamos_mejor_hormiga(resultado, prueba[i].hormiga);

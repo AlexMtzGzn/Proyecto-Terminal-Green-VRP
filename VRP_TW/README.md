@@ -1,4 +1,4 @@
-# 🚚 Resolución del VRPTW con ACO optimizado por DE
+# 🚚 Solución del Problema de Ruteo de Vehículos con Ventanas de Tiempo (VRPTW) mediante ACO-SA: Ajuste de Parámetros mediante Evolución Diferencial
 
 Este proyecto implementa una solución híbrida para el Problema de Rutas de Vehículos con Ventanas de Tiempo (VRPTW), utilizando el algoritmo Ant Colony Optimization (ACO) optimizado automáticamente mediante el Algoritmo Evolutivo Diferencial (DE).
 
