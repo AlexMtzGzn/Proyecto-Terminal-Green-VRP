@@ -43,6 +43,22 @@ typedef struct lista_vehiculos
     nodo_vehiculo *cola;   // Último vehículo en la flota
 } lista_vehiculos;
 
+// --------------------- METAL ---------------------
+// Estructura que representa el metal en el algoritmo SA
+typedef struct metal
+{
+
+    lista_vehiculos *mejor_solucion;
+    double fitness_mejor_solucion;
+    lista_vehiculos *solucion_inicial;
+    double fitness_solucion_inicial;
+    lista_vehiculos *solucion_actual;
+    double fitness_solucion_actual;
+    lista_vehiculos *solucion_vecina;
+    double fitness_solucion_vecina;
+
+} metal;
+
 // --------------------- HORMIGA ---------------------
 // Estructura que representa una hormiga en el algoritmo ACO
 typedef struct hormiga
@@ -74,13 +90,36 @@ typedef struct cliente
 // Estructura que contiene la configuración del problema VRP con ventanas de tiempo
 typedef struct vrp_configuracion
 {
-    int num_clientes;            // Número total de clientes en el VRP
-    int num_vehiculos;           // Número total de vehículos disponibles
-    int num_capacidad;           // Capacidad de cada vehículo
-    cliente *clientes;           // Arreglo de clientes en el VRP
-    double tiempo_ejecucion;     // Tiempo de ejecucion del codigo
+    int num_clientes;        // Número total de clientes en el VRP
+    int num_vehiculos;       // Número total de vehículos disponibles
+    int num_capacidad;       // Capacidad de cada vehículo
+    cliente *clientes;       // Arreglo de clientes en el VRP
+    double tiempo_ejecucion; // Tiempo de ejecucion del codigo
     char *archivo_instancia; // Nombre del archivo
 } vrp_configuracion;
+// --------------------- RANGOS ---------------------
+// Estructura que contiene los rangos de los parámetros del algoritmo
+typedef struct rangos
+{
+    double maxAlpha;
+    double minAlpha;
+    double maxBeta;
+    double minBeta;
+    double maxRho;
+    double minRho;
+    double maxNumHormigas;
+    double minNumHormigas;
+    int maxNumIteracionesACO;
+    int minNumIteracionesACO;
+    double maxTemperatura_inicial;
+    double minTemperatura_inicial;
+    double maxTemperatura_final;
+    double minTemperatura_final;
+    double maxFactor_enfriamiento;
+    double minFactor_enfriamiento;
+    int maxIteracionesSA;
+    int minIteracionesSA;
+} rangos;
 
 // --------------------- INDIVIDUO ---------------------
 // Estructura que representa un individuo en la población de soluciones
@@ -93,6 +132,7 @@ typedef struct individuo
     int numIteraciones; // Número de iteraciones del algoritmo
     double fitness;     // Medida de rendimiento del individuo
     hormiga *hormiga;   // Puntero a la hormiga asociada al individuo
-} individuo;
+    metal *metal;       // Puntero a las soluciones de SA} individuo;
+}individuo;
 
 #endif // ESTRUCTURAS_H
