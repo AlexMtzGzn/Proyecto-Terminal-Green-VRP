@@ -366,7 +366,7 @@ void vrp_aco(struct vrp_configuracion *vrp, struct individuo *ind, double **inst
 
     
     // Bucle principal de iteraciones del algoritmo ACO
-    for (int i = 0; i < ind->numIteraciones; i++)
+    for (int i = 0; i < ind->numIteracionesACO; i++)
     {
 
         // Recorremos todas las hormigas para construir sus soluciones
@@ -397,7 +397,7 @@ void vrp_aco(struct vrp_configuracion *vrp, struct individuo *ind, double **inst
         refuerzo_feromona_mejor_ruta(&hormiga[indice], instancia_feromona, delta);
 
         // Si no es la última iteración, reiniciamos las hormigas para la siguiente generación
-        if (i < ind->numIteraciones - 1)
+        if (i < ind->numIteracionesACO - 1)
             for (int j = 0; j < ind->numHormigas; j++)
                 reiniciar_hormiga(&hormiga[j], vrp);
     }

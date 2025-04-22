@@ -125,14 +125,18 @@ typedef struct rangos
 // Estructura que representa un individuo en la población de soluciones
 typedef struct individuo
 {
-    double alpha;       // Parámetro alpha para el algoritmo ACO
-    double beta;        // Parámetro beta para el algoritmo ACO
-    double rho;         // Factor de evaporación de feromona
-    int numHormigas;    // Número de hormigas en la población
-    int numIteraciones; // Número de iteraciones del algoritmo
-    double fitness;     // Medida de rendimiento del individuo
-    hormiga *hormiga;   // Puntero a la hormiga asociada al individuo
-    metal *metal;       // Puntero a las soluciones de SA} individuo;
-}individuo;
+    double alpha;               // Parámetro alpha para el algoritmo ACO
+    double beta;                // Parámetro beta para el algoritmo ACO
+    double rho;                 // Factor de evaporación de feromona para el algoritmo ACO
+    int numHormigas;            // Número de hormigas en la población para el algoritmo ACO
+    int numIteracionesACO;      // Número de iteraciones del algoritmo para el algoritmo ACO
+    double temperatura_inicial; // Temperatura inicial para el algoritmo SA
+    double temperatura_final;   // Temperatura final para el algoritmo SA
+    double factor_enfriamiento; // Factor de enfriamiento para el algoritmo SA
+    int numIteracionesSA;       // Número de iteraciones del algoritmo SA
+    double fitness;             // Medida de rendimiento del individuo
+    hormiga *hormiga;           // Puntero a la hormiga asociada al individuo
+    metal *metal;               // Puntero a las soluciones de SA
+} individuo;
 
 #endif // ESTRUCTURAS_H

@@ -332,19 +332,15 @@ void aed_tsp(int num_poblacion, int num_generaciones, int tamanio_instancia, cha
 
    inicializar_Distancias(instancia_distancias, tsp);        // Inicializamos las distancias
    inicializar_Visibilidad(instancia_visibilidad, tsp);      // Inicializamos las visibilidad
-   inicializar_Feromona(tsp, instancia_feromonas);           // Inicializamos la feromona
    inicializaPoblacion(objetivo, tsp, rango, num_poblacion); // Inicializamos la poblacion
 
    // Aqui podemos imprimir las instancias
    // imprimir_instancia(instancia_distancias,tsp,"INSTANCIA DISTANCIAS");
-   // imprimir_instancia(instancia_feromonas,tsp,"INSTANCIA FEROMONAS");
    // imprimir_instancia(instancia_visibilidad,tsp,"INSTANCIA VISIBILIDAD");
 
    // Inicializamos la estructura de resultados
    resultado->fitness = INFINITY;                           // Inicializamos el fitness como infinito
    resultado->hormiga = asignar_memoria_hormigas(1);        // Asiganamos memoria para la mejor hormiga
-   resultado->hormiga->ruta = asignar_memoria_lista_ruta(); // Asignamos memoria para la ruta de la mejor hormiga
-   // resultado->metal = (struct metal *)malloc(sizeof(struct metal));
    //  Evaluamos la función objetivo para cada individuo de la población inicial
 
    for (int i = 0; i < num_poblacion; i++) // Iniciamos la funcion objetivo con el objetivo
@@ -400,7 +396,7 @@ void aed_tsp(int num_poblacion, int num_generaciones, int tamanio_instancia, cha
       for (int j = 0; j < barra_ancho; ++j)
       {
          if (j < progreso_barras)
-            printf("=");
+            printf("#");
          else
             printf(" ");
       }
