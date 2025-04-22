@@ -50,9 +50,7 @@ void inicializar_Distancias(double **instancia_distancias, struct vrp_configurac
    {
       for (int j = i + 1; j < vrp->num_clientes; j++)
       {
-         // Calculamos la distancia entre los clientes i y j
-         double distancia = calcular_Distancia(vrp, i, j);
-
+         
          if (i != j)
          {
             distancia = calcular_Distancia(vrp, i, j);

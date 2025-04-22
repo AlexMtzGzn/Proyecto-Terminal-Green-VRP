@@ -93,7 +93,10 @@ void liberar_instancia(double **instancia, int tamanio_instancia)
     free(instancia);
 }
 
-/*Funciones para la estruturas rangos*/
+/**
+ *Funciones para la estruturas rangos.
+*/
+
 struct rangos *asignar_memoria_rangos()
 {
     struct rangos *rango = (struct rangos *)malloc(sizeof(struct rangos));

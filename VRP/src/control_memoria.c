@@ -92,6 +92,22 @@ void liberar_instancia(double **instancia, int tamanio_instancia)
     free(instancia);
 }
 
+struct rangos *asignar_memoria_rangos()
+{
+    struct rangos *rango = (struct rangos *)malloc(sizeof(struct rangos));
+    if (rango == NULL)
+    {
+        imprimir_mensaje("Error: No se pudo asignar memoria para los rangos");
+        exit(EXIT_FAILURE);
+    }
+    return rango;
+}
+
+void liberar_rangos(struct rangos *rango)
+{
+    free(rango);
+}
+
 /*Funciones para la estructura del individuo*/
 
 /**
