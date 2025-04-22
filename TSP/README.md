@@ -80,8 +80,8 @@ Esto permite que los algoritmos se ajusten de forma dinámica, dependiendo de la
 | `alpha`                   | 0.8    | 2.5    |
 | `beta`                    | 2.5    | 6.0    |
 | `rho`                     | 0.1    | 0.5    |
-| `número de hormigas`      | 10     | 25     |
-| `iteraciones ACO`         | 100    | 150    |
+| `número de hormigas`      | 10     | 30     |
+| `iteraciones ACO`         | 50     | 200    |
 | `temperatura inicial`     | 200.0  | 400.0  |
 | `temperatura final`       | 0.01   | 0.1    |
 | `factor de enfriamiento`  | 0.95   | 0.98   |
@@ -97,7 +97,7 @@ Esto permite que los algoritmos se ajusten de forma dinámica, dependiendo de la
 | `beta`                    | 2.5    | 6.0    |
 | `rho`                     | 0.1    | 0.5    |
 | `número de hormigas`      | 20     | 40     |
-| `iteraciones ACO`         | 150    | 200    |
+| `iteraciones ACO`         | 50     | 200    |
 | `temperatura inicial`     | 400.0  | 600.0  |
 | `temperatura final`       | 0.01   | 0.1    |
 | `factor de enfriamiento`  | 0.95   | 0.98   |
@@ -110,14 +110,14 @@ Esto permite que los algoritmos se ajusten de forma dinámica, dependiendo de la
 | Parámetro                 | Mínimo | Máximo |
 |---------------------------|--------|--------|
 | `alpha`                   | 0.8    | 2.0    |
-| `beta`                    | 3.0    | 6.0    |
+| `beta`                    | 3.0    | 5.0    |
 | `rho`                     | 0.1    | 0.3    |
-| `número de hormigas`      | 60     | 120    |
-| `iteraciones ACO`         | 500    | 500    |
+| `número de hormigas`      | 40     | 100    |
+| `iteraciones ACO`         | 50     | 250    |
 | `temperatura inicial`     | 600.0  | 1000.0 |
 | `temperatura final`       | 0.01   | 0.1    |
 | `factor de enfriamiento`  | 0.98   | 0.995  |
-| `iteraciones SA`          | 100    | 150    |
+| `iteraciones SA`          | 80     | 150    |
 
 ---
 
@@ -129,15 +129,30 @@ Esto permite que el algoritmo DE explore soluciones **más ajustadas al tamaño 
 
 ## 🔁 Proceso combinado DE + ACO + SA
 
-1. **DE** genera aleatoriamente una población de conjuntos de parámetros (α, β, ρ, etc.).
-2. Cada conjunto se **evalúa** ejecutando **ACO** (con SA en algunos casos como optimizador local).
-3. Se obtiene la **distancia total de la mejor ruta** generada por ACO.
-4. DE **evoluciona** la población para **minimizar la distancia** encontrada.
-5. El proceso se repite hasta alcanzar un número máximo de generaciones o una mejora mínima.
+## Proceso de Calibración de Parámetros usando DE + ACO (+ SA)
+
+1. **Inicialización con DE**:  
+   Se genera aleatoriamente una población inicial de posibles soluciones, donde cada individuo representa un conjunto de parámetros para el algoritmo **ACO** (por ejemplo: α, β, ρ, número de hormigas, número de iteraciones, etc.).
+
+2. **Evaluación de Individuos**:  
+   Cada conjunto de parámetros se evalúa ejecutando el algoritmo **ACO** con dichos valores.
+
+3. **Optimización Local**:  
+   En algunos casos, se aplica **Recocido Simulado (SA)** como optimizador local para refinar la solución obtenida por **ACO**.
+
+4. **Cálculo del Fitness**:  
+   Se obtiene la **distancia total de la mejor ruta** generada por ACO (posiblemente refinada con SA). Esta distancia se utiliza como el valor de fitness del individuo.
+
+5. **Evolución con DE**:  
+   El algoritmo **DE** utiliza los valores de fitness para evolucionar la población, generando nuevos conjuntos de parámetros con el objetivo de **minimizar la distancia total**.
+
+6. **Criterio de Paro**:  
+   El proceso se repite durante un número máximo de generaciones.
+
 
 ---
 
-Este proceso permite **optimizar automáticamente** el rendimiento del algoritmo ACO (y SA), **evitando el ajuste manual** de parámetros y encontrando de manera más eficiente soluciones de alta calidad para el **Problema del Viajante (TSP)** o el **Problema de Ruteo de Vehículos (VRP)**.
+Este proceso permite **optimizar automáticamente** el rendimiento del algoritmo ACO (y SA), **evitando el ajuste manual** de parámetros y encontrando de manera más eficiente soluciones de alta calidad para el **Problema del Viajante (TSP)**.
 
 ## 🎯 Resultados Esperados
 
@@ -336,21 +351,16 @@ make clean
     │   ├── C100_(25).txt
     │   ├── C200_(25).txt
     │   ├── R100_(25).txt
-    │   ├── R200_(25).txt
     │   ├── RC100_(25).txt
-    │   └── RC200_(25).txt
     ├── VRP_Solomon_50/
     │   ├── C100_(50).txt
     │   ├── C200_(50).txt
     │   ├── R100_(50).txt
-    │   ├── R200_(50).txt
     │   ├── RC100_(50).txt
-    │   └── RC200_(50).txt
     └── VRP_Solomon_100/
         ├── C100_(100).txt
         ├── C200_(100).txt
         ├── R100_(100).txt
-        ├── R200_(100).txt
         └── RC100_(100).txt
 ```
 

@@ -268,7 +268,7 @@ void inicializaPoblacion(struct individuo *objetivo, struct tsp_configuracion *t
          rango->minTemperatura_inicial = 400.0;
          rango->maxTemperatura_final = 0.1;
          rango->minTemperatura_final = 0.01;
-         rango->maxFactor_enfriamiento = 0.98;
+         rango->maxFactor_enfriamiento = 0.99;
          rango->minFactor_enfriamiento = 0.95;
          rango->maxIteracionesSA = 80;
          rango->minIteracionesSA = 50;
@@ -279,13 +279,13 @@ void inicializaPoblacion(struct individuo *objetivo, struct tsp_configuracion *t
       {
          rango->maxAlpha = 2.0;
          rango->minAlpha = 0.8;
-         rango->maxBeta = 6.0;
+         rango->maxBeta = 5.0;
          rango->minBeta = 3.0;
          rango->maxRho = 0.3;
          rango->minRho = 0.1;
          rango->maxNumHormigas = 100;
-         rango->minNumHormigas = 20;
-         rango->maxNumIteracionesACO = 200;
+         rango->minNumHormigas = 40;
+         rango->maxNumIteracionesACO = 250;
          rango->minNumIteracionesACO = 50;
          rango->maxTemperatura_inicial = 1000.0;
          rango->minTemperatura_inicial = 600.0;
@@ -293,7 +293,7 @@ void inicializaPoblacion(struct individuo *objetivo, struct tsp_configuracion *t
          rango->minTemperatura_final = 0.01;
          rango->maxFactor_enfriamiento = 0.995;
          rango->minFactor_enfriamiento = 0.98;
-         rango->maxIteracionesSA = 100;
+         rango->maxIteracionesSA = 150;
          rango->minIteracionesSA = 80;
       }
 
@@ -324,7 +324,7 @@ void aed_tsp(int num_poblacion, int num_generaciones, int tamanio_instancia, cha
    struct rangos *rango = asignar_memoria_rangos();                               // Asignamos memoria para los rangos
 
    tsp->generaciones = num_generaciones; // Asiganamos el numero de generaciones
-   tsp->poblacion = num_poblacion;       // Asiganamos el numero de generaciones
+   tsp->poblacion = num_poblacion;       // Asiganamos el numero de poblacion
 
    double **instancia_visibilidad = asignar_memoria_instancia(tsp->num_clientes); // Generamos memoria para la instancia de la visibilidad
    double **instancia_feromonas = asignar_memoria_instancia(tsp->num_clientes);   // Generamos memoria para la instancia de la feromona

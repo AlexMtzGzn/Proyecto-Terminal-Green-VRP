@@ -295,12 +295,12 @@ void inicializaPoblacion(struct individuo *objetivo, struct vrp_configuracion *v
       {
          rango->maxAlpha = 2.0;
          rango->minAlpha = 0.8;
-         rango->maxBeta = 6.0;
+         rango->maxBeta = 5.0;
          rango->minBeta = 3.0;
          rango->maxRho = 0.3;
          rango->minRho = 0.1;
          rango->maxNumHormigas = 100;
-         rango->minNumHormigas = 20;
+         rango->minNumHormigas = 30;
          rango->maxNumIteracionesACO = 250;
          rango->minNumIteracionesACO = 50;
          rango->maxTemperatura_inicial = 1000.0;
@@ -340,6 +340,10 @@ void aed_vrp(int num_poblacion, int num_generaciones, int tamanio_instancia, cha
    struct individuo *resultado = asignar_memoria_individuos(1);                   // Asignamos memoria para el arreglo de resultados
    vrp_configuracion *vrp = leer_instancia(archivo_instancia, tamanio_instancia); // Mandamo a leer la instancia y a retormamos en un apuntador structura vrp_configuracion
    struct rangos *rango = asignar_memoria_rangos();
+
+   vrp->generaciones = num_generaciones; // Asignamos el numero de generaciones
+   vrp->poblacion = num_generaciones;    // Asiganamos el numero de poblacion
+
    double **instancia_visibilidad = asignar_memoria_instancia(vrp->num_clientes); // Generamos memoria para la instancia de la visibilidad
    double **instancia_feromonas = asignar_memoria_instancia(vrp->num_clientes);   // Generamos memoria para la instancia de la feromona
    double **instancia_distancias = asignar_memoria_instancia(vrp->num_clientes);  // Generamos memoria para la instancia de la las distancias
