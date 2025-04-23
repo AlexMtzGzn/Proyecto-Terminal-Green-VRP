@@ -232,8 +232,8 @@ void inicializaPoblacion(struct individuo *objetivo, struct tsp_configuracion *t
       if (tsp->num_clientes <= 25)
       {
          // Define los rangos para los parámetros de ACO y SA para instancias con 25 o menos clientes
-         rango->maxAlpha = 2.5;
-         rango->minAlpha = 0.8;
+         rango->maxAlpha = 4.0;
+         rango->minAlpha = 2.0;
          rango->maxBeta = 6.0;
          rango->minBeta = 2.5;
          rango->maxRho = 0.5;
@@ -254,8 +254,8 @@ void inicializaPoblacion(struct individuo *objetivo, struct tsp_configuracion *t
       // Asigna rangos para instancias con más de 25 y hasta 51 clientes
       if (tsp->num_clientes > 25 && tsp->num_clientes <= 51)
       {
-         rango->maxAlpha = 2.5;
-         rango->minAlpha = 0.8;
+         rango->maxAlpha = 4.0;
+         rango->minAlpha = 2.0;
          rango->maxBeta = 6.0;
          rango->minBeta = 2.5;
          rango->maxRho = 0.5;
@@ -264,8 +264,8 @@ void inicializaPoblacion(struct individuo *objetivo, struct tsp_configuracion *t
          rango->minNumHormigas = 20;
          rango->maxNumIteracionesACO = 200;
          rango->minNumIteracionesACO = 50;
-         rango->maxTemperatura_inicial = 600.0;
-         rango->minTemperatura_inicial = 400.0;
+         rango->maxTemperatura_inicial = 800.0;
+         rango->minTemperatura_inicial = 600.0;
          rango->maxTemperatura_final = 0.1;
          rango->minTemperatura_final = 0.01;
          rango->maxFactor_enfriamiento = 0.99;
@@ -277,8 +277,8 @@ void inicializaPoblacion(struct individuo *objetivo, struct tsp_configuracion *t
       // Asigna rangos para instancias con más de 51 y hasta 101 clientes
       if (tsp->num_clientes > 51 && tsp->num_clientes <= 101)
       {
-         rango->maxAlpha = 2.0;
-         rango->minAlpha = 0.8;
+         rango->maxAlpha = 4.0;
+         rango->minAlpha = 2.0;
          rango->maxBeta = 5.0;
          rango->minBeta = 3.0;
          rango->maxRho = 0.3;
@@ -287,8 +287,8 @@ void inicializaPoblacion(struct individuo *objetivo, struct tsp_configuracion *t
          rango->minNumHormigas = 40;
          rango->maxNumIteracionesACO = 250;
          rango->minNumIteracionesACO = 50;
-         rango->maxTemperatura_inicial = 1000.0;
-         rango->minTemperatura_inicial = 600.0;
+         rango->maxTemperatura_inicial = 1200.0;
+         rango->minTemperatura_inicial = 800.0;
          rango->maxTemperatura_final = 0.1;
          rango->minTemperatura_final = 0.01;
          rango->maxFactor_enfriamiento = 0.995;
