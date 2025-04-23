@@ -1,4 +1,4 @@
-# 🚚 Optimización del Problema del Viajante (TSP) mediante una Metaheurística Híbrida ACO-SA con Calibración de Parámetros por Evolución Diferencial"
+# 🚚 "Optimización del Problema del Viajante (TSP) mediante una Metaheurística Híbrida ACO-SA con Calibración de Parámetros por Evolución Diferencial"
 
 Este proyecto implementa una solución híbrida para el Problema del Viajante (TSP), utilizando el algoritmo Ant Colony Optimization (ACO) para generar rutas iniciales, el Recocido Simulado (SA) para refinarlas, y todo el proceso optimizado automáticamente mediante el Algoritmo Evolutivo Diferencial (DE).
 
@@ -127,9 +127,8 @@ Esto permite que el algoritmo DE explore soluciones **más ajustadas al tamaño 
 
 ---
 
-## 🔁 Proceso combinado DE + ACO + SA
+## 🔁 🔁 Proceso de Optimización Híbrida (DE + ACO + SA) para TSP
 
-## Proceso de Calibración de Parámetros usando DE + ACO (+ SA)
 
 1. **Inicialización con DE**:  
    Se genera aleatoriamente una población inicial de posibles soluciones, donde cada individuo representa un conjunto de parámetros para el algoritmo **ACO** (por ejemplo: α, β, ρ, número de hormigas, número de iteraciones, etc.).
@@ -364,7 +363,14 @@ make clean
         └── RC100_(100).txt
 ```
 
-### ✅ Consideraciones finales
+## ✅ Conclusión
+El desarrollo de una metaheurística híbrida basada en Ant Colony Optimization (ACO) y Recocido Simulado (SA), calibrada automáticamente mediante un Algoritmo Evolutivo Diferencial (DE), demostró ser una estrategia efectiva para resolver el Problema del Viajante (TSP).
+
+El uso de ACO permitió generar soluciones iniciales de alta calidad inspiradas en el comportamiento de las hormigas, mientras que SA refinó estas soluciones para escapar de óptimos locales y explorar regiones más prometedoras del espacio de búsqueda. La incorporación del DE automatizó por completo el ajuste de parámetros, adaptando la configuración de los algoritmos en función del tamaño y complejidad del problema.
+
+Gracias a este enfoque híbrido, se obtuvieron rutas más cortas y eficientes con menor intervención manual, haciendo el sistema escalable y versátil para distintas instancias del TSP. Además, el uso de rangos adaptativos por tamaño del problema garantizó un equilibrio entre precisión y eficiencia computacional.
+
+## ✅ Consideraciones finales
 
 Este trabajo busca contribuir al estudio y solución del problema TSP mediante la implementación de algoritmos bioinspirados. Se invita a la comunidad a explorar, reutilizar y mejorar el código según sus necesidades.
 

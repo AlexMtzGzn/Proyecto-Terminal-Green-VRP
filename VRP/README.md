@@ -1,4 +1,5 @@
-# 🚚 Resolución del Problema de Ruteo de Vehículos (VRP) mediante ACO-SA y Ajuste Paramétrico usando Evolución Diferencial
+# 🚚 "Resolución del Problema de Ruteo de Vehículos (VRP) Metaheurística Híbrida ACO-SA con Calibración de Parámetros por Evolución Diferencial"
+
 
 Este proyecto implementa una solución híbrida para el Problema de Ruteo de Vehículos (VRP), combinando el algoritmo de Optimización por Colonias de Hormigas (**ACO**) con Recocido Simulado (**SA**) como refinador local, y ajustando automáticamente sus parámetros mediante un Algoritmo Evolutivo Diferencial (**DE**).
 
@@ -93,6 +94,7 @@ Esto permite que los algoritmos se ajusten de forma dinámica, dependiendo de la
 | `temperatura inicial`     | 200.0  | 400.0  |
 | `temperatura final`       | 0.01   | 0.1    |
 | `factor de enfriamiento`  | 0.95   | 0.98   |
+| `factor de control`       | 0.5    | 0.9    |
 | `iteraciones SA`          | 30     | 50     |
 
 ---
@@ -109,6 +111,7 @@ Esto permite que los algoritmos se ajusten de forma dinámica, dependiendo de la
 | `temperatura inicial`     | 400.0  | 600.0  |
 | `temperatura final`       | 0.01   | 0.1    |
 | `factor de enfriamiento`  | 0.95   | 0.98   |
+| `factor de control`       | 0.5    | 0.9    |
 | `iteraciones SA`          | 50     | 80     |
 
 ---
@@ -125,6 +128,7 @@ Esto permite que los algoritmos se ajusten de forma dinámica, dependiendo de la
 | `temperatura inicial`     | 600.0  | 1000.0 |
 | `temperatura final`       | 0.01   | 0.1    |
 | `factor de enfriamiento`  | 0.98   | 0.995  |
+| `factor de control`       | 0.5    | 0.9    |
 | `iteraciones SA`          | 80     | 150    |
 
 ---
@@ -133,9 +137,7 @@ Esto permite que los algoritmos se ajusten de forma dinámica, dependiendo de la
 
 Esto permite que el algoritmo DE explore soluciones **más ajustadas al tamaño del problema**, evitando usar configuraciones demasiado pequeñas para instancias grandes, o demasiado costosas para instancias pequeñas. Así se logra un **balance entre calidad de la solución y tiempo de cómputo**.
 
-## 🔁 Proceso combinado DE + ACO + SA
-
-## Proceso de Calibración de Parámetros usando DE + ACO (+ SA) para VRP
+## 🔁 Proceso de Optimización Híbrida (DE + ACO + SA) para VRP
 
 1. **Inicialización con DE**:  
    Se genera aleatoriamente una población inicial de posibles soluciones, donde cada individuo representa un conjunto de parámetros para el algoritmo **ACO** (por ejemplo: α, β, ρ, número de hormigas, número de iteraciones, etc.).
@@ -408,7 +410,22 @@ make clean
 
 ```
 
-### ✅ Consideraciones finales
+## ✅ Conclusión
+Este proyecto presentó una solución híbrida al Problema de Ruteo de Vehículos (VRP), integrando las fortalezas de tres algoritmos metaheurísticos: ACO para la construcción de rutas, SA como optimizador local y DE como calibrador automático de parámetros. La combinación permitió generar rutas eficientes que respetan las restricciones del problema, al mismo tiempo que se optimizaban automáticamente los hiperparámetros involucrados.
+
+Gracias al uso de rangos adaptativos de parámetros según el tamaño del problema, se logró un equilibrio entre calidad de la solución y eficiencia computacional, permitiendo que el sistema sea escalable a distintas instancias del VRP.
+
+Los resultados obtenidos evidencian que la integración de ACO con SA mejora la calidad de las rutas mediante refinamiento local, mientras que DE contribuye significativamente a la exploración del espacio de configuraciones óptimas, reduciendo la necesidad de ajuste manual.
+
+En conjunto, este enfoque demostró ser una alternativa robusta y flexible para abordar problemas de ruteo complejos en logística, con potencial de ser aplicado o extendido a otras variantes del VRP o a escenarios reales.
+
+## 🚀 Trabajo futuro
+
+Como línea futura de trabajo, se propone la integración de otros enfoques metaheurísticos híbridos que puedan mejorar la calidad de las soluciones encontradas y reducir el tiempo de cómputo. También sería interesante evaluar el rendimiento del algoritmo propuesto con diferentes tipos de instancias del problema, incluyendo aquellas con restricciones más complejas como ventanas de tiempo o múltiples depósitos.
+
+Además, se podría explorar la paralelización del algoritmo utilizando técnicas de programación concurrente o programación paralela, con el fin de acelerar el proceso de optimización en instancias de mayor tamaño.
+
+## ✅ Consideraciones finales
 
 Este trabajo busca contribuir al estudio y solución del problema VRP mediante la implementación de algoritmos bioinspirados. La principal diferencia respecto a la versión TSP es la incorporación de restricciones de capacidad y la selección greedy de vehículos. Se invita a la comunidad a explorar, reutilizar y mejorar el código según sus necesidades.
 
