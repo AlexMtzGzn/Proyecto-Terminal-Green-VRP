@@ -370,6 +370,12 @@ El uso de ACO permitió generar soluciones iniciales de alta calidad inspiradas 
 
 Gracias a este enfoque híbrido, se obtuvieron rutas más cortas y eficientes con menor intervención manual, haciendo el sistema escalable y versátil para distintas instancias del TSP. Además, el uso de rangos adaptativos por tamaño del problema garantizó un equilibrio entre precisión y eficiencia computacional.
 
+## 🚀 Trabajo futuro
+
+Como línea futura de trabajo, se propone la integración de otros enfoques metaheurísticos híbridos que puedan mejorar la calidad de las soluciones encontradas y reducir el tiempo de cómputo. También sería interesante evaluar el rendimiento del algoritmo propuesto con diferentes tipos de instancias del problema.
+
+Además, se podría explorar la paralelización del algoritmo utilizando técnicas de programación concurrente o programación paralela, con el fin de acelerar el proceso de optimización en instancias de mayor tamaño.
+
 ## ✅ Consideraciones finales
 
 Este trabajo busca contribuir al estudio y solución del problema TSP mediante la implementación de algoritmos bioinspirados. Se invita a la comunidad a explorar, reutilizar y mejorar el código según sus necesidades.

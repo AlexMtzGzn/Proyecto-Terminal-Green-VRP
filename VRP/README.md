@@ -129,7 +129,7 @@ Esto permite que los algoritmos se ajusten de forma dinámica, dependiendo de la
 | `temperatura final`       | 0.01   | 0.1    |
 | `factor de enfriamiento`  | 0.98   | 0.995  |
 | `factor de control`       | 0.5    | 0.9    |
-| `iteraciones SA`          | 80     | 150    |
+| `iteraciones SA`          | 80     | 100    |
 
 ---
 
