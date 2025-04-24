@@ -203,6 +203,10 @@ void sa(struct vrp_configuracion *vrp, struct individuo *ind, double **instancia
 
     // Ciclo de enfriamiento
     while (temperatura > ind->temperatura_final)
+    printf("Temp: %.4f | Fitness actual: %.4f | Mejor: %.4f\n",
+        temperatura,
+        ind->metal->fitness_solucion_actual,
+        ind->metal->fitness_mejor_solucion);
     {
         for (int i = 0; i < ind->numIteracionesSA; i++)
         {
